@@ -14,38 +14,37 @@ function keylistener() {
         let key = e.target;
         eingabe.push(key.dataset.value);
         let zahl = [eingabe.join("")];
-        zahl = parseInt(zahl)
         let operator = key.dataset.action;
-
-        console.log(zahl);
+        let comma = key.dataset.float;
 
         updateDisplay(zahl);
 
-        if (!operator == "") {
+        if (!operator === "") {
             zahlen.push(zahl);
             eingabe = [];
-            console.log("zahlenkeylist", zahlen,);
+            console.log("zahlenkeylist", zahlen);
         }
         if (operator == 'clear') {
             zahlen = [];
             zahl = [];
             operator = "";
             updateDisplay(zahl);
-            
-        } else if (zahlen.length >= 3) {
+
+        } 
+        if (zahlen.length >= 3) {
             speicher();
         }
-        if(operator == '='){
+        if (operator == '=') {
             console.log('fertig', zahlen[0]);
         } else if (operator) {
-            zahlen.push(operator); 
-        }   
+            zahlen.push(operator);
+        }
     })
 }
 //---------------------Eingabespeicher + Rechenstart------------------------------------------------
 function speicher() {
     let zahl1 = parseFloat(zahlen[0]);
-    let operator = zahlen[1]        
+    let operator = zahlen[1]
 
     let zahl2 = parseFloat(zahlen[2]);
 
@@ -57,9 +56,7 @@ function speicher() {
 }
 //---------------------Rechnen----------------------------------------------------------------------
 function rechnen(zahl1, zahl2, operator) {
-
     if (operator == '+') {
-        console.log("rechnet");
         return zahl1 + zahl2
     }
     if (operator == '-') {
@@ -71,10 +68,8 @@ function rechnen(zahl1, zahl2, operator) {
     if (operator == '/') {
         return zahl1 / zahl2
     }
-
 }
 //---------------------Display Ausgabe----------------------------------------------------------------------       
-
 function updateDisplay(eingabe) {
     let anzeige = document.querySelector('#ergebnis');
     anzeige.innerHTML = eingabe;
