@@ -1,52 +1,73 @@
 "use strict";
 
+let zahlen = [];
+
 function init() {
     keylistener()
 }
-
-
+//---------------------Listerner + Abfrage Operator------------------------------------------------
 function keylistener() {
     let knopf = document.querySelector('.eingabe')
     let eingabe = [];
+
     knopf.addEventListener('click', (e) => {
         let key = e.target;
         eingabe.push(key.dataset.value);
-        let zahl = [eingabe.join("")]
-        let action = key.dataset.action;
-        let rechnung = [];
-        console.log(eingabe);
+        let zahl = [eingabe.join("")];
+        zahl = parseInt(zahl)
+        let operator = key.dataset.action;
+
         console.log(zahl);
 
-        if (action === '+'){
-            rechnung.push((zahl[0]));
-            //let ergebnis = parseInt(zahl[0]) + parseInt(zahl[1]);
-            console.log(rechnung);
-        }
+        updateDisplay(zahl);
 
-        
-        /*
-            (action === '-') ||
-            (action === '*') ||
-            (action === '/') ||
-            (action === '=')) {
-            console.log("Ein Operator wurde angeklickt");
-        
-        if (action === '.') {
-            console.log("Komma wurde angeklickt");
+        if (!operator == "") {
+            zahlen.push(zahl);
+            eingabe = [];
+            console.log("zahlenkeylist", zahlen,);
         }
-        if (action === 'clear') {
-            action = "";
-        } 
-        if (!isNaN(zahl)){
-            eingabe.push(zahl);
+        if (zahlen.length >= 3) {
+            speicher();
         }
-        */
-        updateDisplay(zahl)
-        
+        if(operator == '='){
+            console.log('fertig', zahlen[0]);
+        } else if (operator) {
+            zahlen.push(operator); 
+        }   
     })
+}
+//---------------------Eingabespeicher + Rechenstart------------------------------------------------
+function speicher() {
+    let zahl1 = parseFloat(zahlen[0]);
+    let operator = zahlen[1]        
+
+    let zahl2 = parseFloat(zahlen[2]);
+
+    let erg = rechnen(zahl1, zahl2, operator)
+    zahlen = [erg]
+    console.log("erg", zahlen);
+    updateDisplay(erg);
 
 }
+//---------------------Rechnen----------------------------------------------------------------------
+function rechnen(zahl1, zahl2, operator) {
 
+    if (operator == '+') {
+        console.log("rechnet");
+        return zahl1 + zahl2
+    }
+    if (operator == '-') {
+        return zahl1 - zahl2
+    }
+    if (operator == '*') {
+        return zahl1 * zahl2
+    }
+    if (operator == '/') {
+        return zahl1 / zahl2
+    }
+
+}
+//---------------------Display Ausgabe----------------------------------------------------------------------       
 
 function updateDisplay(eingabe) {
     let anzeige = document.querySelector('#ergebnis');
