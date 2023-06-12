@@ -26,7 +26,13 @@ function keylistener() {
             eingabe = [];
             console.log("zahlenkeylist", zahlen,);
         }
-        if (zahlen.length >= 3) {
+        if (operator == 'clear') {
+            zahlen = [];
+            zahl = [];
+            operator = "";
+            updateDisplay(zahl);
+            
+        } else if (zahlen.length >= 3) {
             speicher();
         }
         if(operator == '='){
