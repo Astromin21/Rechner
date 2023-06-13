@@ -2,9 +2,6 @@
 
 let zahlen = [];
 
-function init() {
-    keylistener()
-}
 //---------------------Listerner + Abfrage Operator------------------------------------------------
 function keylistener() {
     let knopf = document.querySelector('.eingabe')
@@ -16,10 +13,16 @@ function keylistener() {
         let zahl = [eingabe.join("")];
         let operator = key.dataset.action;
         let comma = key.dataset.float;
-
+        //console.log(zahl);
         updateDisplay(zahl);
 
-        if (!operator === "") {
+        if (comma === 'comma') {
+            eingabe.push('.');
+            zahl = [eingabe.join("")];
+            updateDisplay(zahl);
+            comma = '';
+        }
+        if (!operator == "") {
             zahlen.push(zahl);
             eingabe = [];
             console.log("zahlenkeylist", zahlen);
@@ -29,13 +32,13 @@ function keylistener() {
             zahl = [];
             operator = "";
             updateDisplay(zahl);
-
-        } 
+        }
         if (zahlen.length >= 3) {
             speicher();
         }
-        if (operator == '=') {
-            console.log('fertig', zahlen[0]);
+        if (operator === '=') {
+            updateDisplay(zahlen[0]);
+            zahlen = [zahlen[0]];
         } else if (operator) {
             zahlen.push(operator);
         }
@@ -45,14 +48,11 @@ function keylistener() {
 function speicher() {
     let zahl1 = parseFloat(zahlen[0]);
     let operator = zahlen[1]
-
     let zahl2 = parseFloat(zahlen[2]);
-
     let erg = rechnen(zahl1, zahl2, operator)
     zahlen = [erg]
-    console.log("erg", zahlen);
+    //console.log("erg", zahlen);
     updateDisplay(erg);
-
 }
 //---------------------Rechnen----------------------------------------------------------------------
 function rechnen(zahl1, zahl2, operator) {
@@ -75,4 +75,4 @@ function updateDisplay(eingabe) {
     anzeige.innerHTML = eingabe;
 }
 
-init()
+keylistener()
